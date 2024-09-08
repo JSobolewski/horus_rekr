@@ -1,22 +1,24 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FileCabinet implements Cabinet {
     private List<Folder> folders;
 
     @Override
-    public List<Folder> findFolderByName(String name) {
-        List<Folder> foundFolders = null;
+    public Optional<Folder> findFolderByName(String name) {
+        Optional<Folder> foundFolder = Optional.empty();
         for(Folder folder : folders) {
             if(folder.getName().equals(name))
-                foundFolders.add(folder);
+                foundFolder = Optional.of(folder);
         }
 
-        return foundFolders;
+        return foundFolder;
     }
 
     @Override
     public List<Folder> findFoldersBySize(String size) {
-        List<Folder> foundFolders = null;
+        List<Folder> foundFolders = new ArrayList<>();
         for(Folder folder : folders) {
             if(folder.getSize().equals(size))
                 foundFolders.add(folder);
@@ -27,6 +29,10 @@ public class FileCabinet implements Cabinet {
 
     @Override
     public int count() {
-        return folders.size();
+        int count = 0;
+        for(Folder folder : folders) {
+            count++;
+        }
+        return count;
     }
 }
